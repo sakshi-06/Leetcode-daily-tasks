@@ -1,20 +1,18 @@
 class Solution {
 public:
     int deleteAndEarn(vector<int>& nums) {
-        vector<int> cnt(10002);
-		for(int i=0;i<nums.size();i++)
-		{
-			cnt[nums[i]]+=nums[i];
-		}
+         int n = 10001;
+        vector<int> values(n, 0);
+        for (int num : nums)
+            values[num] += num;
 
-		vector<int> dp(10002);
-		dp[1]=cnt[1];
-		dp[2]=max(cnt[1],cnt[2]);
-		for(int i=3;i<dp.size();i++)
-		{
-			dp[i]=max(dp[i-2]+cnt[i],dp[i-1]);
-		}
-
-		return max(dp[10000],dp[9999]);
+        int take = 0, skip = 0;
+        for (int i = 0; i < n; i++) {
+            int takei = skip + values[i];
+            int skipi = max(skip, take);
+            take = takei;
+            skip = skipi;
+        }
+        return max(take, skip);
     }
 };
