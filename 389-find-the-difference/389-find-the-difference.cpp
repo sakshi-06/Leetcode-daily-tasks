@@ -1,23 +1,24 @@
 class Solution {
 public:
     char findTheDifference(string s, string t) {
-        unordered_map<char,int> mp;
-        for(auto &x:s)
+        sort(s.begin(),s.end());
+        sort(t.begin(),t.end());
+        int i=0;
+        int j=0;
+        while(i<s.size())
         {
-            mp[x]++;
-        }
-        for(auto &x:t)
-        {
-            if(!mp.count(x))
+            if(s[i]==t[j])
             {
-                return x;
+                i++;
+                j++;
             }
             else
             {
-                mp[x]--;
-                if(mp[x]==0) mp.erase(x);
+                return t[j];
+                j++;
+                
             }
         }
-       return 'x'; 
+        return t.back();
     }
 };
