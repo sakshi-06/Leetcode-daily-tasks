@@ -1,31 +1,15 @@
 class Solution {
 public:
-     int mod=1e9+7;
-        long long dp[501][501];
-    long long solve(int unpicked,int undelievered)
-    {
-        if(unpicked==0 && undelievered==0)
-        {
-            return 1;
-        }
-        if(unpicked<0 || undelievered<0|| undelievered<unpicked)
-        {
-            return 0;
-        }
-        if(dp[unpicked][undelievered])
-        {
-            return dp[unpicked][undelievered];
-        }
-        long long ans=0;
-        ans+= unpicked * solve(unpicked-1, undelievered);
-        ans%=mod;
-        ans+=(undelievered - unpicked) * solve(unpicked, undelievered -1);
-        ans %=mod;
-        return dp[unpicked][undelievered]=ans;
-    }
+     int mod=1e9+7;   
     int countOrders(int n) {
-      memset(dp, 0,sizeof(dp));
-        return solve(n,n);
+      long ans=1;
+        for(int i=1;i<=n;i++)
+        {
+            ans=ans*i;
+            ans=ans*(2*i-1);
+            ans=ans%mod;
+        }
         
+        return ans;
     }
 };
