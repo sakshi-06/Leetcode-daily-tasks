@@ -10,8 +10,7 @@
  */
 class Solution {
 public:
-   
-    ListNode* merge(ListNode* l,ListNode* r)
+    ListNode* merge(ListNode* l, ListNode*r)
     {
         ListNode* f=l;
         ListNode* s=r;
@@ -47,23 +46,20 @@ public:
     ListNode* sortList(ListNode* head) {
         if(head == NULL || head ->next == NULL)
             return head;
-        ListNode *temp = NULL;
-        ListNode *slow = head;
-        ListNode *fast = head;
-        
-        // 2 pointer appraoach / turtle-hare Algorithm (Finding the middle element)
-        while(fast !=  NULL && fast -> next != NULL)
+        ListNode* temp=NULL;
+        ListNode* slow=head;
+        ListNode* fast=head;
+        while(fast!=NULL && fast->next!=NULL)
         {
-            temp = slow;
-            slow = slow->next;          //slow increment by 1
-            fast = fast ->next ->next;  //fast incremented by 2
-            
-        }   
-        temp -> next = NULL;            //end of first left half
+           temp=slow;
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        temp->next=nullptr;
         
         ListNode* l1 = sortList(head);    //left half recursive call
         ListNode* l2 = sortList(slow);    //right half recursive call
         
-        return merge(l1, l2);    
+        return merge(l1, l2);  
     }
 };
