@@ -11,7 +11,7 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* head=new ListNode(-1);
+        ListNode *head=new ListNode(-1);
         ListNode* temp=head;
         while(list1 && list2)
         {
@@ -32,17 +32,17 @@ public:
         }
         while(list1)
         {
-            temp->next=list1;
-            list1=list1->next;
-            temp=temp->next;
-            temp->next=nullptr;
+                temp->next=list1;
+                list1=list1->next;
+                temp=temp->next;
+                temp->next=nullptr;
         }
         while(list2)
         {
-            temp->next=list2;
-            list2=list2->next;
-            temp=temp->next;
-            temp->next=nullptr;
+                temp->next=list2;
+                list2=list2->next;
+                temp=temp->next;
+                temp->next=nullptr;
         }
         return head->next;
     }
