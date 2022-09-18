@@ -18,7 +18,6 @@ public:
         {
             ans+=min(right[i],left[i])-height[i];
         }
-        return ans;
-        
+        return ans; 
     }
 };
