@@ -1,32 +1,33 @@
 class Solution {
 public:
     bool isBipartite(vector<vector<int>>& graph) {
-        int n = graph.size();
-        vector<int> colors(n, 0);
+        int n=graph.size();
+        vector<int> color(n,-1);
         queue<int> q;
-        
-        for (int i = 0; i < n; i++) {
-            if (colors[i]) continue;
-            
-            colors[i] = 1;
+        for(int i=0;i<n;i++)
+        {
+            if(color[i]!=-1)
+            {
+                continue;
+            }
+            color[i]=0;
             q.push(i);
-            
-            while (!q.empty()) {
-                int temp = q.front();
-                
-                for (auto neighbor : graph[temp]) {
-                    
-					// Color neighbor with opposite color
-                    if (!colors[neighbor]){
-                        colors[neighbor] = -colors[temp];
-                        q.push(neighbor);
-                    }
-                    
-					// If the neighbor has the same color - can't bipartite.
-                    else if (colors[neighbor] == colors[temp]) 
-                        return false;
-                }
+            while(!q.empty())
+            {
+                int u=q.front();
                 q.pop();
+                for(auto &v:graph[u])
+                {
+                    if(color[v]==color[u])
+                    {
+                        return false;
+                    }
+                    else if(color[v]==-1)
+                    {
+                        color[v]=1-color[u];
+                        q.push(v);
+                    }
+                }
             }
         }
         return true;
