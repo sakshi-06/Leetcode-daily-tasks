@@ -10,28 +10,16 @@
  */
 class Solution {
 public:
-    int find_len(ListNode* head)
-    {
-        int len=0;
-        while(head!=nullptr)
-        {
-            head=head->next;
-            len++;
-        }
-        return len;
-    }
     ListNode* deleteMiddle(ListNode* head) {
-        if(!head || head->next==nullptr) return nullptr;
-        int len=find_len(head);
-        int mid=len/2;
-        mid--;
-        ListNode* temp=head;
-        while(mid--)
+        if(!head || !head->next) return nullptr;
+        ListNode* fast=head->next->next;
+        ListNode* slow=head;
+        while(fast && fast->next)
         {
-            temp=temp->next;
+            slow=slow->next;
+            fast=fast->next->next;
         }
-        temp->next=temp->next->next;
-        //delete(temp);
+        slow->next=slow->next->next;
         return head;
     }
 };
