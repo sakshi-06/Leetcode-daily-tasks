@@ -1,22 +1,19 @@
 class Solution {
 public:
-    static bool cmp(vector<int> &a, vector<int> &b)
+    static bool cmp(vector<int>&a, vector<int> &b)
     {
         return a[1]>b[1];
     }
-    int maximumUnits(vector<vector<int>>& box, int truck) {
-        sort(box.begin(), box.end(),cmp);
-        int i=0;
+    int maximumUnits(vector<vector<int>>& boxTypes, int truckSize) {
+        sort(boxTypes.begin(), boxTypes.end(), cmp);
         int ans=0;
-        //for(auto x:box) cout<< x[0]<<" "<<x[1]<<endl;
-        while(truck>0 && i<box.size())
+        int i=0;
+        while(i<boxTypes.size() && truckSize>0)
         {
-            ans+=min(truck,box[i][0])*box[i][1];
-            truck-=box[i][0];
-            //cout<<truck<<" ";
+            ans+=min(truckSize, boxTypes[i][0])*boxTypes[i][1];
+            truckSize-=boxTypes[i][0];
             i++;
         }
         return ans;
-        
     }
 };
