@@ -1,25 +1,27 @@
 class Solution {
 public:
     int bestTeamScore(vector<int>& scores, vector<int>& ages) {
-        vector<pair<int, int>> players;
-        int n = scores.size();
-        for (int i=0; i<n; i++) {
-            players.push_back({ages[i], scores[i]});
+        vector<vector<int>> p;
+        for(int i=0;i<scores.size();i++)
+        {
+            p.push_back({ages[i], scores[i]});
         }
-        sort(players.begin(), players.end(), greater<>());
-        
-        int ans = 0;
-        vector<int> dp(n);
-        for (int i=0; i<n; i++) {
-            int score = players[i].second;
-            dp[i] = score;
-            for (int j=0; j<i; j++) {
-                if (players[j].second >= players[i].second) { // age of j is certainly >= i, so only important part to check 
-													          //  before we add i and j in the same team is the score.
-                    dp[i] = max(dp[i], dp[j] + score);
+        sort(p.begin(), p.end(), greater<>());
+        int n=ages.size();
+        vector<int> dp(n); //dp[i] shows the max score you get by having an score and ages till ith index
+    
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            dp[i]=p[i][1];
+            for(int j=0;j<i;j++)
+            {
+                if(p[j][1]>=p[i][1])  // age of j >=age of i
+                {
+                    dp[i]=max(dp[i], dp[j]+p[i][1]);
                 }
             }
-            ans = max(ans, dp[i]);
+            ans=max(ans, dp[i]);
         }
         return ans;
     }
