@@ -1,23 +1,47 @@
 class Solution {
 public:
     int minimumDeviation(vector<int>& nums) {
-        //if we multiply all odd numbers by 2 it becomes even and then we only 
-        //have to perform single operation
-        // if we have even numbers it never increase, so we need to decrease the largest number until it's odd
-        for(auto &x:nums)
+        int n = nums.size();
+        int mx = INT_MIN, mn = INT_MAX;
+        
+        // Increasing all elements to as maximum as it can and tranck the minimum,
+        // number and also the resutl
+        for(int i = 0; i<n; ++i)
         {
-            if(x%2==1)
-            {
-                x=x*2;
-            }
+            if((nums[i]%2) != 0)    // multiplication by 2 if nums[i] is odd
+                nums[i] *= 2;   // maximising all odd numbers
+
+        
+            mx = max(mx,nums[i]);
+            mn = min(mn,nums[i]);
         }
-        set<int> s(nums.begin(),nums.end());
-        int res=*s.rbegin()-*s.begin();
-        while (*s.rbegin() % 2 == 0) {
-            s.insert(*s.rbegin() / 2);
-            s.erase(*s.rbegin());
-            res = min(res, *s.rbegin() - *s.begin());
+        
+        int min_deviation = mx - mn;
+        
+        priority_queue<int> pq;
+        // Inserting into Priority queue (Max Heap) and try to decrease as much we can
+        for(int i = 0; i<n; ++i)
+        {
+            pq.push(nums[i]);
         }
-        return res;
+        
+        while((pq.top()) % 2 == 0)
+        {
+            int top = pq.top();
+            pq.pop(); // popped the top element
+            
+            min_deviation = min(min_deviation, top - mn);
+            top /= 2;
+            mn = min(mn, top);  // updating min
+            pq.push(top);   // pushing again the top as we have to minimize the max
+        }
+        
+        min_deviation = min(min_deviation, pq.top() - mn);
+        
+        // we are returning mx - mn
+        
+        return min_deviation;
+    
+        
     }
 };
