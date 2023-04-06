@@ -15,7 +15,7 @@ public:
         dfs(grid,i,j-1,check);
     }
     int closedIsland(vector<vector<int>>& grid) {
-       int n=grid.size();
+        int n=grid.size();
        int m=grid[0].size();
         int ans=0;
         for(int i=0;i<n;i++)
