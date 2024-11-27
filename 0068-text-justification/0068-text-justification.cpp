@@ -1,39 +1,39 @@
 class Solution {
 public:
-    string formString(vector<string> &line, int maxWidth, int &cnt){
-        int spaces = maxWidth-cnt;
-        for(int i=0;i<spaces;i++){
-            if(line.size()==1){
-                line[0]+=" ";
-            } else{
-                line[i%(line.size()-1)]+=" ";
+    string formString(int maxWidth, vector<string>& line, int totalWordsLen){
+        int spacesLeft = maxWidth - totalWordsLen;
+        for(int i=0;i<spacesLeft;i++){
+            if(line.size()==1) line[0]+=" ";
+            else{
+                line[i%(line.size()-1)]+= " ";
             }
         }
-        string finl = accumulate(line.begin(),line.end(),string(""));
-        line.clear();
-        cnt = 0;
-        return finl;
+        string finalString = accumulate(line.begin(), line.end(), string(""));
+        return finalString;
     }
     vector<string> fullJustify(vector<string>& words, int maxWidth) {
         vector<string> ans;
         vector<string> line;
-        int cnt=0;
-        for(int i=0;i<words.size();i++){
-            int l = words[i].size();
-            if(l+line.size()+cnt > maxWidth){
-                ans.push_back(formString(line,maxWidth, cnt));
+        int totalWordsLen=0;
+        for(string &word:words){
+            int len = word.size();
+            int spaces = line.size();
+            if(len+spaces+totalWordsLen > maxWidth){
+                ans.push_back(formString(maxWidth, line, totalWordsLen));
+                line.clear();
+                totalWordsLen = 0;
             }
-            line.push_back(words[i]);
-            cnt+=l;
+            totalWordsLen+= len;
+            line.push_back(word);
         }
-        string finl;
-        for(auto it : line)
-            finl+=it+" ";
-        finl.pop_back();
-        for(int i = finl.length();i<maxWidth;i++)
-            finl+=" ";
-        ans.push_back(finl);
+        string fnl;
+        for(int i=0;i<line.size();i++){
+          fnl+= (line[i]+" ");  
+        }
+        fnl.pop_back();
+       for(int i = fnl.length();i<maxWidth;i++)
+            fnl+=" "; 
+        ans.push_back(fnl);
         return ans;
-        
     }
 };
